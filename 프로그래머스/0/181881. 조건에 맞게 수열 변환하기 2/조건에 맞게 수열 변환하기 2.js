@@ -1,24 +1,28 @@
 function solution(arr) {
-    let x = 0; // 반복 횟수
+    var answer = 0;
+    let num=0;
     
-    while (true) {
-        // 현재 상태 저장
-        const prevArr = [...arr]; 
+    
+    while(true){
+        let newArr = arr.slice();
         
-        // 변환 작업
-        arr = arr.map(value => {
-            if (value >= 50 && value % 2 === 0) {
-                return value / 2;
-            } else if (value < 50 && value % 2 === 1) {
-                return value * 2 + 1;
+        
+        newArr = newArr.map((value)=>{
+            if(value>=50&&value%2==0){
+                return value/=2;
             }
-            return value; // 변환 조건에 해당하지 않으면 그대로 유지
+            else if(value<50&&value%2!=0){
+                return value= value*2+1;
+            }
+            else return value;
         });
-
-        // 배열이 더 이상 변하지 않으면 종료
-        if (JSON.stringify(prevArr) === JSON.stringify(arr)) {
-            return x;
+        
+        if(JSON.stringify(newArr)===JSON.stringify(arr)){
+            return num;
         }
-        x++;
+        num+=1;
+        
+        arr = newArr;
+
     }
 }
