@@ -1,37 +1,26 @@
-// 큐 queue
-
 function solution(progresses, speeds) {
     var answer = [];
     
-    let days= [];
-    
-    for(let i=0; i<progresses.length; i++ ){
-        let percentage = progresses[i]; //93
-        let day = 0;
-        while(percentage<100){ // 93 >= 100
-            percentage += speeds[i]; //
-            day+=1;
-        }
-        days.push(day); // [7,3,9 ];
+    //for -> map
+    let days = progresses.map((progress,i) => Math.ceil((100-progress)/speeds[i]));
         
-    }
-    
-    //days 
-    let func= 0;
+    let deploy = 0;
     let update = days[0];
     
-    for(let i=0;i<days.length;i++){
-        if(days[i]<=update){
-            func++;
+    for (const day of days){
+        //배포 일자가 바뀔 때
+        if(update<day){
+            //앞에 배포 몇 개 됐는지 푸시 
+            answer.push(deploy);
+            deploy = 1;
+            update = day;
+            
         }
         else{
-            answer.push(func);
-            func = 1;
-            update = days[i];
+            deploy++;
         }
     }
+    answer.push(deploy);
     
-    answer.push(func);
-        
     return answer;
 }
